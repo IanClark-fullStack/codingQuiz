@@ -5,20 +5,22 @@ var timerVal = '60';
 var quizIntro = 'Answer the question correctly & as fast you can. The maximum point value you recieve for each question will be 200 points. Every 2 seconds, that score will decrease. Good luck.';
 let userScore = 0;
 // Questions Array
-var initialIndex = 0;
 var questionsArray = [
     {
         'name': 'questionTwo',
-        'questionPrompt': 'Choose the best definition of scope in JavaScript.',
-        'correctAnswer': 'where declared variables and functions are visible',
-        answersArray: ['the functions that the browser \'knows about\' by default', 'variables and functions get \'hoisted\' to the top', 'the value of the variables defined inside a function', 'where declared variables and functions are visible']
+        questionPrompt: 'Choose the best definition of scope in JavaScript.',
+        correctAnswer: 'where declared variables and functions are visible',
+        answerA: 'the functions that the browser \'knows about\' by default', 
+        answerB: 'variables and functions get \'hoisted\' to the top',
+        answerC: 'the value of the variables defined inside a function',
+        answerD: 'where declared variables and functions are visible'
         
     },
     {
         'name': 'questionThree',
         'questionPrompt': 'Variables declared with ___ are block-scoped',
         'correctAnswer': 'let',
-        'answersArray': ['var', 'function', 'let']
+        answersArray: ['var', 'function', 'let']
     }
 ];
 
@@ -39,7 +41,33 @@ var letsGo = document.createElement('button');
 // Create Elements for Quiz
 
 var printFeedback = document.createElement('h4');
+var quizWrapper = document.getElementById('quiz');
+var currentPrompt = document.getElementById('question-title');
 
+ var displayList = document.getElementById('answerList');
+
+  // Create the Element to hold Current Question 
+  
+
+  currentPrompt.textContent = questionsArray[0].questionPrompt;
+var button1 = document.getElementById('1');
+var button2 = document.getElementById('2');
+var button3 = document.getElementById('3');
+var button4 = document.getElementById('4');
+
+button1.textContent = questionsArray[0].answerA;
+button2.textContent = questionsArray[0].answerB;
+button3.textContent = questionsArray[0].answerC;
+button4.textContent = questionsArray[0].answerD;
+
+displayList.addEventListener('click', function(event) {
+    event.preventDefault();
+    var element = event.target;
+   
+    if (element.matches('button')) {
+        if (element.textContent === questionsArray[0].correctAnswer)
+    }
+});
 
 // Assign Element Values : start page 
 highScores.innerHTML = 'View High Scores';
@@ -65,119 +93,88 @@ mainWrapper.appendChild(gameTitle);
 mainWrapper.appendChild(gameIntro);
 mainWrapper.appendChild(letsGo);
 
-// Event Listeners : Start Page
 
+function loadTimer() {
+    // start timer function
+    var stopWatch = setInterval(function () {
+        timerVal--;
+        countDown.innerHTML = timerVal;
+        if (timerVal === 0) {
+            clearInterval(stopWatch);
+            // // Call End of Quiz Function
+            // stopQuiz();
+        }
+    }, 1000);
+}
+
+// Event Listeners : Start Page
 letsGo.addEventListener('click', function(event) {
     // event.preventDefault();
     letsGo = event.target;
     gameIntro.style.display = 'none';
     loadTimer();
-    loadQuiz(0);
+    loadQuiz();
     
 });
+
+// Function to use as a callback on each answer
+const generateButton = (element) => {
+    // Create List Items 
+    var listItem = document.createElement('li');
+    // Create each button
+    var buttonItem = document.createElement('button');
+    // Give each button an answer 
+    buttonItem.textContent = element;
+    // Assign each button an associated ID to differntiate between start and answer
+    buttonItem.id = 'choiceButton';
+      // Paint the buttons on the page 
+      displayList.appendChild(listItem);
+    listItem.appendChild(buttonItem);
+  
+}
+
+let retrieveAnswers = [];
+let answerLength = 4;
+
+
+
+
+
+function loadTimer() {
+    // Local Variables
+    
+    // start timer function
+        var stopWatch = setInterval(function() {
+            timerVal--;
+            countDown.innerHTML = timerVal;
+            if (timerVal === 0) {
+            clearInterval();
+                // // Call End of Quiz Function
+                // stopQuiz();
+            }
+        }, 1000);
+};
+        // Fill the Element 
+        
+        // Paint the current Question to the page 
+        
+        
+        // For each answer, perform the callback generateButton 
+        
+        // In each iteration, we also need to evaluate whether the selcted button is correct. 
+
+        
+
+        
+    
+
+    
+
+
+
 
 function hideFeedback() {
     var displayFeeback = document.getElementById('feedback');
     displayFeeback.setAttribute('style', 'display: none;');
 }
-
-// console.log(questionsArray[intitalIndex].correctAnswer);
-function loadQuiz(currIndex) {
-    var goodChoice = questionsArray[currIndex].correctAnswer;
-    console.log(goodChoice);
-    const currQuestion = questionsArray[currIndex].questionPrompt;
-   
-    
-    // If the index has been incremented 
-    if (currIndex === questionsArray.length) {
-        return;
-    }
-    else {
-        
-        var currentQuestion = document.createElement('h3');
-        currentQuestion.textContent = currQuestion;
-        mainWrapper.appendChild(currentQuestion);
-        // At the current Index, get the answers array for the associated question. 
-        var choiceArray = questionsArray[currIndex].answersArray;
-        // Function to use as a callback on each answer
-        const createButton = (element) => {
-            // Create each button
-            var answerButtons = document.createElement('button');
-            // Give each button an answer 
-            answerButtons.textContent = element;
-            // Assign each button an associated ID to differntiate between start and answer
-            answerButtons.id = 'choiceButton';
-            // Paint the buttons on the page 
-            currentQuestion.appendChild(answerButtons);
-        }
-        // Perform the callback on each answer
-        choiceArray.forEach(createButton);
-        
-        // Coditional Logic for User clicks 
-        function checkAnswers(event) {
-            event.preventDefault();
-            
-           
-
-            // if (buttonClick.matches('#choiceButton')) {
-                // Get all the choiceButtons on the page 
-                
-                // If the buttons text content matches the value at correctAnswer 
-                // Get the buttons 
-                var answerButtons = document.getElementById('choiceButton');
-                 // if user click a button only 
-                answerButtons = event.target; 
-                console.log(answerButtons.textContent);
-                if (answerButtons.textContent === goodChoice) {
-                    // increase the users score 
-                    userScore += 5;
-                    console.log(userScore);
-                    // Print feeback to the Page
-                    
-                    printFeedback.textContent = 'correct!';
-                    answerButtons.appendChild(printFeedback);
-
-                    // clear the feedback from the screen 
-                    setTimeout(hideFeedback, 1000);
-                    currIndex++;
-                    // Recursive Case : call the function again with next question in play 
-                    
-                } // In the event the user did not select the correct answer,
-                else if (userScore > 0 && answerButtons.textContent !== goodChoice) {
-                    // decrease userscore 
-                    userScore - 5;
-                    // Print feeback to the Page
-                    printFeedback.textContent = 'oops!';
-                    answerButtons.appendChild(printFeedback);
-                    // clear the feedback from the screen 
-                    setTimeout(hideFeedback, 1000);
-                    currIndex++;
-                }
-                else {
-                    // Decrease the users score 
-                    timerVal - 5;
-                    // Print feeback to the Page
-                    printFeedback.textContent = 'You\'re losing time!';
-                    answerButtons.appendChild(printFeedback);
-
-                    // clear the feedback from the screen 
-                    setTimeout(hideFeedback, 1000);
-                    
-                        // call the function again with next question in play 
-                    currIndex++;
-                }
-                loadQuiz(currIndex);
-             
-        }
-
-        mainWrapper.addEventListener('click', checkAnswers);
-
-        
-
-    }
-
-} 
-
-
-console.log(userScore);
 
