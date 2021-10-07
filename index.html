@@ -2,106 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Assets/CSS/style.css" />
-    <title>Take a Code Quiz</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>theCodingQuiz</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css" /> -->
 </head>
 <body>
-    <!-- Header Element -->
-    <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container navbar-container mx-0">
+            <div class="row w-100">
+                <div class="col-3 col-md-1">
+                    <button type="button" id="view-scores-btn" class="btn btn-info">View High Scores</button> 
+                </div>
+                <div class="col-4 col-md-8"></div>
+                <div class="col-5 col-md-4">
+                    <form>
+                        <div class="form-group row align-items-center">
+                            <label for="timeLeft" class="col-sm-7 col-form-label">Left on The Clock</label>
+                            <div class="col-sm-5">
+                                <input type="number" readonly class="form-control" id="timeLeft" placeholder="0">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="landing-wrapper" class="container">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h1>Code Quiz</h1>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <p>Answer the question correctly & as fast you can. The maximum point value you recieve for each question will be 200 points. Every 2 seconds, that score will decrease. Good luck.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button id="start" type="button" class="btn btn-secondary btn-lg">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-wrapper" class="container d-none">
         
-    </header>
+    </div>
+    <div id="final-wrapper" class="container d-none">
+        <div class="row">
+            <div class="col-12 text-center">
+                <form>
+                    <div class="form-group row">
+                        <label for="final-score" class="col-sm-7 col-form-label">Final Score</label>
+                        <div class="col-sm-5">
+                            <input type="number" readonly class="form-control" id="final-score" placeholder="0">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group">
+                      <label for="user-initials">Initials</label>
+                      <input type="text" class="form-control" id="user-initials" placeholder="Enter initials">
+                    </div>
+                    <button id="submit-user-info" type="button" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="highscore-wrapper" class="container d-none">
+        <div class="row">
+            <div class="col-2"></div>
+            <div id="highscorestable" class="col-8">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>High Scores</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
 
-    <main>
-        
-        
-        <section id="quiz"></section>
-        <h3 id="question-title"></h3>
-        <ul id="answerList">
-            <li><button id="1"></button></li>
-            <li><button id="2"></button></li>
-            <li><button id="3"></button></li>
-            <li><button id="4"></button></li>
-        </ul>
-        <section id="feedback"></section>
-    </main>
-    
-        
-        <!-- Nav Element Child -->
-        
-            <!-- High Scores Link (Nav-child, timer sibling) -->
-            <!-- Timer Display (Nav-child, high scores sibling) -->
-
-        <!-- End Nav -->
-    <!-- End Headder -->
-
-    <!--_______________________ On Page Load _______________________-->
-    
-    <!-- Main Element : Parent -->
-
-        <!-- Title Heading (child to main, sibling to p and button) -->
-        <!-- Short Description P (child to main, sibling to heading, and button ) -->
-        <!-- Button to get Started (child to main, sibling to heading and p )-->
-
-    <!-- End Main -->
-
-    <!--_______________________ End On Page Load _______________________-->
-
-
-
-
-
-    
-    <!--_______________________ On Click (Start-Button) _______________________-->
-    
-    <!-- Main Element : Parent -->
-
-        <!-- Title Heading === Question Heading (child to main, sibling to p and button) -->
-            <!-- REMOVE Short Description P (child to main, sibling to heading, and button ) -->
-            <!-- REMOVE Button to get Started (child to main, sibling to heading and p )-->
-        <!-- ADD / APPEND: UL -->
-            <!-- ADD / APPEND: List Items -->
-                <!-- LI [1]: ADD / APPEND: Button[0] === true -->
-                <!-- LI [2 through 3]: ADD / APPEND: Button[2 through 3] === false -->
-
-
-    <!-- End Main -->
-
-    <!--_______________________ End On Page Load _______________________-->
-
-    
+    <script src="assets/js/loadQuestion.js"></script>
     <script src="assets/js/script.js"></script>
-    <script src="assets/js/loadTimer.js"></script>
 </body>
 </html>
-
-
-Choose the best definition of scope in JavaScript.
-
-the functions that the browser 'knows about' by default
-variables and functions get 'hoisted' to the top
-the value of the variables defined inside a function
-where declared variables and functions are visible
-
-Variables declared with ___ are block-scoped:
-
-var
-let
-function
-
-
-Through its scope, a function:
-
-has access to all variables and functions declared in its enclosing scope.
-has access to all variables and functions declared only in its inner scope.
-has access to variables and functions declared anywhere.
-continues to move up the scope chain when it finds a matching identifier in the current scope.
-
-
-How can a JavaScript event be defined on any DOM node?
-
-addEventListener()
-getElementById()
-querySelector()
-click()
